@@ -1,5 +1,5 @@
 from flask import Flask
-from config import config_options
+from config import Config
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
@@ -17,18 +17,13 @@ login_manager.login_view = 'auth.login'
 def create_app():
 
     #Create App Configurations
-    app.config.from_object(config_options)
+    app.config.from_object(Config)
 
     #Register App Blueprints
     from .auth import auth as auth_blueprint
-    from .main import main as main_blueprint
-
     app.register_blueprint(auth_blueprint)
-    app.register_blueprint(main_blueprint)
 
-    #Initialise Flask Extensions
-    login_manager.init_app(app)
-    db.init_app(app)
-    bootstrap.init_app(app)
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
 
     return app
