@@ -18,6 +18,7 @@ def create_app():
 
     #Create App Configurations
     app.config.from_object(Config)
+    app.config['SECRET_KEY'] = 'paper'
 
     #Register App Blueprints
     from .auth import auth as auth_blueprint
