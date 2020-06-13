@@ -1,0 +1,6 @@
+virtual/
+.env
+*.pyc
+instance/
+__pycache__
+start.sh
