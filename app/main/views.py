@@ -1,6 +1,6 @@
 from flask import render_template,redirect,url_for,abort
 from app.main import main
-from app.models import User,Blog
+from app.models import User,Blog,Comment
 from .forms import UpdateProfile,CreateBlog
 from .. import db
 from app.request import get_quotes
@@ -50,3 +50,12 @@ def new_blog():
         blog.save()
         return redirect(url_for('main.index'))
     return render_template('newblog.html', form = form)
+
+#Create New Comment
+@main.route('/comment/<blog_id>', methods = ['Post','GET'])
+@login_required
+def comment(blog_id):
+    comment =request.form.get('newcomment')
+    new_comment = Comment(comment = comment, user_id = current_user._get_current_object().id, blog_id=blog_id)
+    new_comment.save()
+    return redirect(url_for('main.index',comment=comment))

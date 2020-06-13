@@ -1,8 +1,8 @@
 """Initial Migration
 
-Revision ID: 8ca7f7ffaac5
+Revision ID: 4cdc20233e2e
 Revises: 
-Create Date: 2020-06-13 21:48:19.514723
+Create Date: 2020-06-13 22:00:25.775015
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8ca7f7ffaac5'
+revision = '4cdc20233e2e'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,12 @@ def upgrade():
     sa.Column('name', sa.String(length=255), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('subscribers',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('email', sa.String(length=255), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_subscribers_email'), 'subscribers', ['email'], unique=True)
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=255), nullable=False),
@@ -49,9 +55,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.String(), nullable=True),
     sa.Column('posted', sa.DateTime(), nullable=True),
-    sa.Column('post_id', sa.Integer(), nullable=True),
+    sa.Column('blog_id', sa.Integer(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['post_id'], ['blogs.id'], ),
+    sa.ForeignKeyConstraint(['blog_id'], ['blogs.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -63,5 +69,7 @@ def downgrade():
     op.drop_table('comments')
     op.drop_table('blogs')
     op.drop_table('users')
+    op.drop_index(op.f('ix_subscribers_email'), table_name='subscribers')
+    op.drop_table('subscribers')
     op.drop_table('roles')
     # ### end Alembic commands ###
