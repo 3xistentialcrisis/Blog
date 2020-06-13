@@ -72,10 +72,14 @@ class Blog(db.Model):
         db.session.add(self)
         db.session.commit()
 
-
     def delete(self):
         db.session.remove(self)
         db.session.commit()
+
+    def get_blog(id):
+        post = Post.query.filter_by(id=id).first()
+
+        return post
 
     def __repr__(self):
         return f'Blog {self.title}'
