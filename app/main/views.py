@@ -60,8 +60,9 @@ def new_blog():
 #Update Blog
 @main.route('/blog/<id>')
 def blog(id):
+    comments = Comment.query.filter_by(blog_id=id).all()
     blog = Blog.query.get(id)
-    return render_template('blog.html',blog=blog)
+    return render_template('blog.html',blog=blog, comments=comments)
 
 @main.route('/blog/<blog_id>/update', methods = ['GET','POST'])
 @login_required
@@ -100,6 +101,14 @@ def subscribe():
     mail_message("Subscribed to Blog Today","email/welcome_subscriber",new_subscriber.email,new_subscriber=new_subscriber)
     flash('You are Successfully subscribed to this Blog!')
     return redirect(url_for('main.index'))
+
+#View BlogPosts Made by Users
+@main.route('/user/<string:username>')
+def user_posts(username):
+    user = User.query.filter_by(username=username).first()
+    page = request.args.get('page',1, type = int )
+    blogs = Blog.query.filter_by(user=user).order_by(Blog.posted.desc()).paginate(page = page, per_page = 4)
+    return render_template('userposts.html',blogs=blogs,user = user)
 
 #Delete Blog
 @main.route('/blog/<blog_id>/delete', methods = ['POST'])
