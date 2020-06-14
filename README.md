@@ -1,5 +1,5 @@
 # Blog Today
-Your Unique Personal Blogging Website
+Your Personal Blogging Website
 ## Author
 
 [Wanjiku Karanja](https://github.com/3xistentialcrisis/Blog)
