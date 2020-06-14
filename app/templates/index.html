@@ -6,7 +6,7 @@
     <h1 class="text-center"> Welcome to Your Blog</h1>
 
         <div class="col-md-9">
-            {% for blog in blogs %}
+            {% for blog in blogs.items %}
                 <hr>
 
 
@@ -37,6 +37,18 @@
                 </div>
 
                     <hr>
+                {% endfor %}
+
+                {% for page_num in blogs.iter_pages(left_edge = 1, right_edge = 1, left_current=1, right_current = 2) %}
+                    {% if page_num %}
+                        {% if blogs.page == page_num %}
+                            <a href="{{url_for('main.index',page = page_num)}}" class="btn btn-sm btn-info mb-2">{{ page_num }}</a>
+                        {% else%}
+                        <a href="{{url_for('main.index',page = page_num)}}" class="btn btn-sm btn-outline-info mb-2">{{ page_num }}</a>
+                        {% endif %}
+                    {% else%}
+                        ...
+                    {% endif %}
                 {% endfor %}
             </div>
 
