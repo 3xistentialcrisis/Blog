@@ -113,11 +113,14 @@ def updateblog(blog_id):
 @main.route('/comment/<blog_id>', methods = ['Post','GET'])
 @login_required
 def comment(blog_id):
+    blog = Blog.query.get(blog_id)
     comment =request.form.get('newcomment')
     new_comment = Comment(comment = comment, user_id = current_user._get_current_object().id, blog_id=blog_id)
     new_comment.save()
-    comments = Comment.query.filter_by(blog_id=blog_id).all()
-    return redirect(url_for('main.index',comment=comment, comments=comments))
+    # comments = Comment.query.filter_by(blog_id=blog_id).all()
+    return redirect(url_for('main.blog', id=blog.id))
+    # return redirect(url_for('main.index',comment=comment, comments=comments, blog=blog))
+
 
 #Subscribe to Blog
 @main.route('/subscribe',methods = ['POST','GET'])
