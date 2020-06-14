@@ -5,6 +5,11 @@ body{
 #all{
     margin left: 50px;
 }
+
+#modalComment{
+    border-radius: 5px;
+}
+
 .reg {
     padding: 20px;
 }

@@ -26,14 +26,15 @@
                 <strong>{{blog.user.username | title}}</strong></span> </a> </p>
             </div>
 
-             <div class="col-md-6 ml-10 ">
+             <div class="col-md-6 ml-10 pr-4 d-justify userblog">
                  <p>Posted on : {{blog.posted.strftime('%d-%m-%Y')}}</p>
                  <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
 
 <!--                    Blog Content-->
                     <p>{{blog.content}}</p>
 <!--                    <p>Posted: {{blog.posted.strftime('%d-%m-%Y')}}</p>-->
-                    <p >{{blog.comment.count()}} Comments</p>
+                    <p> <a class="btn btn-sm btn-info" href="{{url_for('main.blog',id = blog.id)}}">
+                        Comment</a> {{blog.comment.count()}} Comments</p>
              </div>
 
                 <div class="col-md-4">
@@ -98,7 +99,7 @@
                     {{ message }}
                     </div>
                     {% endfor %}
-                    <form class="form-inline" action="{{url_for('main.subscribe')}}" method="POST">
+                    <form class="form-inline ml-2" action="{{url_for('main.subscribe')}}" method="POST">
                         <div class="md-form form-group">
                             <label for="form92">Email Address...</label>
                             <input type="email"  class="form-control" name ="subscriber" required>
@@ -113,4 +114,5 @@
         </div>
         </div>
 </div>
+
 {% endblock %}

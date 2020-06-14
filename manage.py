@@ -20,9 +20,6 @@ def make_shell_context():
 #Tests
 @manager.command
 def test():
-    '''
-    Run the unit tests
-    '''
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=5).run(tests)
