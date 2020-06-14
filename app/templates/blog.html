@@ -18,6 +18,14 @@
                         <h3>Title: {{blog.title}}</h3>
                         <p>{{blog.content}}</p>
                         <p>{{blog.comment.count()}} Comments</p>
+
+<!--                        Edit/Delete Blog-->
+                        {% if blog.user == current_user %}
+                            <div>
+                                <a class="btn btn-success btn-sm m-1" href="{{url_for('main.updateblog',blog_id = blog.id)}}">Edit Blog</a>
+                                <button class="btn btn-sm btn-danger m-1" data-toggle="modal" data-target="#modalConfirmDelete" type="submit">Delete Blog </button>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <hr>

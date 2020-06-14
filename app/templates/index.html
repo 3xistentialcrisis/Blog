@@ -15,7 +15,7 @@
                 <div class="col-md-6">
                     <p>By <span style="color: blue">{{blog.user.username}}</span>
                         on {{blog.posted.strftime('%d-%m-%Y')}}</p>
-                    <p>Title: {{blog.title}}</p>
+                    <p>Title: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
 
 <!--                    Blog Content-->
                     <p>{{blog.content}}</p>
