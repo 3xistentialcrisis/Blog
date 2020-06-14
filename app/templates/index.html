@@ -2,36 +2,49 @@
 
 {% block content %}
 
-<div class="container">
-    <h1 class="text-center"> Welcome to Your Blog</h1>
+<div class="container landing">
+    <div class="row ">
+        {% if current_user.is_authenticated %}
+        <div class="col-md-3 "><a class="btn btn-sm btn-info " id="ref" href="{{url_for('main.new_blog')}}">Post</a></div>
+                {% endif %}
 
-        <div class="col-md-9">
+        <div class="col-md-9 ">
+        <h1 class="text-center"> Welcome to Blog Today</h1>
+        </div>
+
+        <div class="row">
+        <div class="col-md-7">
             {% for blog in blogs.items %}
                 <hr>
 
-
-            <div class="row">
 <!--                Blog Title-->
-                <div class="col-md-6">
-                    <p>By  <a href="{{url_for('main.user_posts',username = blog.user.username)}}">
-                        <span style="color: blue">{{blog.user.username}}</span> </a>  on {{blog.posted.strftime('%d-%m-%Y')}}</p>
-                    <p>Title: <a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title}}</a></h3>
+            <div class="row">
+            <div class="col-md-2 ">
+                <img class="rounded-circle blog-img mr-10" src="{{ url_for('static', filename='photos/' + blog.user.profile_pic_path) }}">
+                p id="usern"><a href="{{url_for('main.user_posts',username = blog.user.username)}}"><span  style="color: blue">
+                <strong>{{blog.user.username | title}}</strong></span> </a> </p>
+            </div>
+
+             <div class="col-md-6 ml-10">
+                 <p>Posted on : {{blog.posted.strftime('%d-%m-%Y')}}</p>
+                 <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
 
 <!--                    Blog Content-->
                     <p>{{blog.content}}</p>
-                    <p>Posted: {{blog.posted.strftime('%d-%m-%Y')}}</p>
-                    <p>{{blog.comment.count()}} Comments</p>
-                </div>
+<!--                    <p>Posted: {{blog.posted.strftime('%d-%m-%Y')}}</p>-->
+                    <p >{{blog.comment.count()}} Comments</p>
+             </div>
 
-                <div class="col-md-6">
-                    <form class="form-inline" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
+                <div class="col-md-4">
+                    <button class="btn btn-sm btn-info" id="profbutton">Comment</button>
+                    <form class="form-inline" id="form" action="{{url_for('main.comment',blog_id = blog.id)}}" method="POST">
                         <div class="md-form form-group">
 <!--                            Blog Comments-->
                             <label for="form92">Type Your Comment Here</label>
                             <input type="text"  class="form-control" name ="newcomment" required>
                         </div>
                         <div class="md-form form-group">
-                            <button class="btn btn-sm btn-outline-info">Comment</button>
+                            <button class="btn btn-sm btn-outline-info" id="submit">Comment</button>
                         </div>
                     </form>
                 </div>
@@ -53,25 +66,50 @@
             </div>
 
             <div class="col-md-3">
-                <h4>Some Words of Wisdom from: <span style="color: blue">{{quote.author}}</span> </h4>
-                <p>{{quote.quote}}</p>
+                <div class="container">
+                    <div class="card">
+                        <div class="card-title">
+                            <h4>Some Words of Wisdom from: <span style="color: blue">{{quote.author}}</span> </h4>
+                        </div>
+                <p class="card-text">{{quote.quote}}</p>
 <!--                Subscribe to Blog Today-->
-                {% for message in get_flashed_messages() %}
-                <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message }}
+<!--                {% for message in get_flashed_messages() %}-->
+<!--                <div class="alert alert-success">-->
+<!--                <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+<!--                {{ message }}-->
+<!--                </div>-->
+<!--                {% endfor %}-->
+<!--                <form class="form-inline" action="{{url_for('main.subscribe')}}" method="POST">-->
+<!--                    <div class="md-form form-group">-->
+<!--                        <label for="form92">Enter Email Address...</label>-->
+<!--                        <input type="email"  class="form-control" name ="subscriber" required>-->
+<!--                    </div>-->
+<!--                    <div class="md-form form-group">-->
+<!--                        <button class="btn btn-sm btn-outline-info">Subscribe Here</button>-->
+
+                    </div>
                 </div>
-                {% endfor %}
-                <form class="form-inline" action="{{url_for('main.subscribe')}}" method="POST">
-                    <div class="md-form form-group">
-                        <label for="form92">Enter Email Address...</label>
-                        <input type="email"  class="form-control" name ="subscriber" required>
+
+                <div class="container-fluid">
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message }}
                     </div>
-                    <div class="md-form form-group">
-                        <button class="btn btn-sm btn-outline-info">Subscribe Here</button>
-                    </div>
-                </form>
+                    {% endfor %}
+                    <form class="form-inline" action="{{url_for('main.subscribe')}}" method="POST">
+                        <div class="md-form form-group">
+                            <label for="form92">Email Address...</label>
+                            <input type="email"  class="form-control" name ="subscriber" required>
+                        </div>
+                        <div class="md-form form-group">
+                            <button class="btn btn-sm btn-outline-info" id="subs">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
+        </div>
         </div>
 </div>
 {% endblock %}
