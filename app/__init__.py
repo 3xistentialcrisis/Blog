@@ -1,5 +1,5 @@
 from flask import Flask
-from config import Config
+from config import config_options
 from flask_mail import Mail
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -15,10 +15,10 @@ login_manager.session_protection = 'strong'
 login_manager.login_view = 'auth.login'
 photos = UploadSet('photos',IMAGES)
 
-def create_app():
+def create_app(config_name):
     app = Flask(__name__)
     #Create App Configurations
-    app.config.from_object(Config)
+    app.config.from_object(config_options[config_name])
     app.config['SECRET_KEY'] = 'paper'
 
     #Register App Blueprints
