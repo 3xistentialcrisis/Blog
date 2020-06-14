@@ -1,0 +1,10 @@
+Hello!
+
+A new blog has been posted
+See more details of the blog below
+
+Title: {{blog.title}}
+Post: {{blog.content|truncate(30)}}
+
+Regards,
+Blog Today Team
