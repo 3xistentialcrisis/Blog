@@ -8,6 +8,7 @@ from flask_login import login_required,current_user
 from ..email import mail_message
 import secrets
 import os
+from PIL import Image
 
 #Index Page
 @main.route('/')
@@ -22,7 +23,10 @@ def save_picture(form_picture):
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_filename = random_hex + f_ext
     picture_path = os.path.join('app/static/photos', picture_filename)
-    form_picture.save(picture_path)
+    output_size = (150, 150)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
     return picture_filename
 
 #User Profile
