@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import ValidationError, StringField,PasswordField,SubmitField,BooleanField
-from wtforms.validators import Required,Email,EqualTo
+from wtforms import StringField,PasswordField,SubmitField,BooleanField,ValidationError
+from wtforms.validators import Required,Email,EqualTo, Length
 from ..models import User
 
 class LoginForm(FlaskForm):
@@ -10,7 +10,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class RegForm(FlaskForm):
-    username = StringField('Enter Your Username', validators=[Required()])
+    username = StringField('Enter Your Username', validators=[Required(), Length(min=4, max=20)])
     email = StringField('Email Address', validators=[Required(),Email()])
     password = PasswordField('Password',validators = [Required(), EqualTo('password_confirm',message = 'Passwords must match')])
     password_confirm = PasswordField('Confirm Passwords',validators = [Required()])
@@ -18,8 +18,8 @@ class RegForm(FlaskForm):
 
     def validate_email(self,data_field):
         if User.query.filter_by(email = data_field.data).first():
-            raise ValidationError("The Email has already been registered!")
+            raise ValidationError(message="The Email has already been registered!")
 
     def validate_username(self, data_field):
         if User.query.filter_by(username = data_field.data).first():
-            raise ValidationError("The username is not available")
+            raise ValidationError(message="The username is not available")
