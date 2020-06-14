@@ -79,9 +79,9 @@ class Blog(db.Model):
         db.session.commit()
 
     def get_blog(id):
-        post = Post.query.filter_by(id=id).first()
+        blog = Blog.query.filter_by(id=id).first()
 
-        return post
+        return blog
 
     def __repr__(self):
         return f'Blog {self.title}'
@@ -103,6 +103,10 @@ class Comment(db.Model):
     def delete(self):
         db.session.remove(self)
         db.session.commit()
+
+    def get_comment(id):
+        comment = Comment.query.all(id=id)
+        return comment
 
     def __repr__(self):
         return f'Comment {self.comment}'

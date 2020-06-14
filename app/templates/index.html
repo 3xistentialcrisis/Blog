@@ -9,11 +9,12 @@
                 {% endif %}
 
         <div class="col-md-9 ">
-        <h1 class="text-center"> Welcome to Blog Today</h1>
+        <h1 class="text-center"> Welcome to <strong>Blog Today</strong></h1>
+            <p><em>Your Unique Personal Blog!</em></p>
         </div>
 
         <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-7" >
             {% for blog in blogs.items %}
                 <hr>
 
@@ -25,7 +26,7 @@
                 <strong>{{blog.user.username | title}}</strong></span> </a> </p>
             </div>
 
-             <div class="col-md-6 ml-10">
+             <div class="col-md-6 ml-10 ">
                  <p>Posted on : {{blog.posted.strftime('%d-%m-%Y')}}</p>
                  <h4><a href="{{url_for('main.blog',id = blog.id)}}">{{blog.title | upper}}</a></h4>
 
