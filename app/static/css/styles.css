@@ -3,8 +3,8 @@
 }
 
 .account-img {
-    height: 150px;
-    width: 150px;
+    height: 250px;
+    width: 250px;
     margin-right: 20px;
     margin-bottom: 16px;
   }
@@ -15,15 +15,15 @@
 
 #submit{
      background-color: blue;
-     border-radius: 6px;
+     border-radius: 5px;
 }
 
-.card{
+.cardquote{
      background-color:rgba(116, 116, 116, 0.486);
      padding: 3%;
 }
 
-#form{
+#form,#profileupdate{
      display: none;
 }
 
