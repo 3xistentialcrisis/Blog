@@ -1,5 +1,6 @@
 from flask import render_template,flash, request, redirect, url_for
 from flask_login import login_user, logout_user,login_required
+from app import db
 from app.auth import auth
 from app.models import User
 from .forms import RegForm,LoginForm
@@ -22,8 +23,10 @@ def login():
 def signup():
     form = RegForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data, password=form.password.data)
+        user = User(email = form.email.data, username = form.username.data,password = form.password.data)
         user.save()
+        db.session.add(user)
+        db.session.commit()
         mail_message("Welcome to Your Blog Today", "email/welcome", user.email, user=user)
         return redirect(url_for('auth.login'))
     return render_template('auth/signup.html', registration_form=form)
